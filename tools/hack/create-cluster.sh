@@ -23,12 +23,25 @@ networking:
   ${CNI_CONFIG}
   ipFamily: ${IP_FAMILY}
   # uncomment following line when use IPv6 on macos or windows
-  # apiServerAddress: 127.0.0.1
+  apiServerAddress: 192.168.31.180
   # it's to prevent inherit search domains from the host which slows down DNS resolution
   # and cause problems to IPv6 only clusters running on IPv4 host.
   dnsSearch: []
 nodes:
 - role: control-plane
+  extraPortMappings:
+  - containerPort: 6443
+    hostPort: 6443
+    protocol: TCP
+    listenAddress: "0.0.0.0"
+  - containerPort: 80
+    hostPort: 8001
+    protocol: TCP
+    listenAddress: "0.0.0.0"
+  - containerPort: 443
+    hostPort: 8443
+    protocol: TCP
+    listenAddress: "0.0.0.0"
 EOM
 )
 
